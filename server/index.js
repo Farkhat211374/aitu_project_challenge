@@ -15,6 +15,9 @@ db.sequelize.sync()
   });
 
 
+require("dotenv").config();
+
+
 //middleware
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -29,6 +32,8 @@ app.use(express.urlencoded({
 //ROUTES//
 require("./app/routes/employees.routes")(app);
 require("./app/routes/departmnets.routes")(app);
+require("./app/routes/roles.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

@@ -1,5 +1,6 @@
 const { DATEONLY } = require("sequelize");
 const db = require("../database/db");
+var bcrypt = require("bcrypt");
 const Employee = db.employees;
 const Op = db.Sequelize.Op;
 
@@ -16,7 +17,7 @@ exports.create = (req, res) => {
   // Create a Employee
   const employee = {
     employee_key: req.body.employee_key,
-    password: req.body.password,
+    password: bcrypt.hashSync(req.body.password, 8),
     first_name: req.body.first_name,
     middle_name: req.body.middle_name,
     last_name: req.body.last_name,
