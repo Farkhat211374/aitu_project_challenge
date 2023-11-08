@@ -1,5 +1,5 @@
-const Task = require('../models/task')
-const Section = require('../models/section')
+const Task = require('../models/task.model')
+const Section = require('../models/section.model')
 
 exports.create = async (req, res) => {
   const { sectionId } = req.body

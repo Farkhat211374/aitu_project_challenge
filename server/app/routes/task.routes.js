@@ -4,7 +4,7 @@ const router = require('express').Router({ mergeParams: true })
 const { param, body } = require('express-validator')
 const tokenHandler = require('../middlewares/tokenHandler')
 const validation = require('../middlewares/validation')
-const taskController = require('../controllers/task')
+const taskController = require('../controllers/task.controller')
 
 router.post(
   '/',

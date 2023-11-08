@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Employee
 exports.create = (req, res) => {
-  // Validate request
+  // Validate requests
   if (!req.body.employee_key) {
     res.status(400).send({
       message: "'Employee_key'can not be empty!"

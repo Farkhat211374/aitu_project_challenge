@@ -1,5 +1,5 @@
-const Section = require('../models/section')
-const Task = require('../models/task')
+const Section = require('../models/section.model')
+const Task = require('../models/task.model')
 
 exports.create = async (req, res) => {
   const { boardId } = req.params

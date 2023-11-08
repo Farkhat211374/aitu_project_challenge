@@ -14,17 +14,17 @@ mongoose.connect('mongodb+srv://Farkhat:Sagat@cluster0.1i382pz.mongodb.net/kanba
 });
 
 
-// const db = require("./app/database/db");
-// db.sequelize.sync()
-//   .then(() => {
-//     console.log("Synced to test db");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to sync db: " + err.message);
-//   });
+const db = require("./app/database/db");
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced to test db");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 
-// require("dotenv").config();
+require("dotenv").config();
 
 
 //middleware
@@ -43,6 +43,9 @@ require("./app/routes/employees.routes")(app);
 require("./app/routes/departmnets.routes")(app);
 require("./app/routes/roles.routes")(app);
 require("./app/routes/auth.routes")(app);
+require("./app/routes/board.routes")(app);
+require("./app/routes/section.routes")(app);
+require("./app/routes/task.routes")(app);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

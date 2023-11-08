@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const { schemaOptions } = require('./modelOptions')
 
 const boardSchema = new Schema({
-  user: {
+  owner: {
     type: String,
     required: true
   },

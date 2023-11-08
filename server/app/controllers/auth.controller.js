@@ -1,6 +1,7 @@
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 const db = require("../database/db");
+const CryptoJS = require('crypto-js')
 const Employee = db.employees;
 const Op = db.Sequelize.Op;
 
@@ -9,20 +10,20 @@ const Op = db.Sequelize.Op;
 
 exports.signin = async (req, res) => {
   try {
-    const user = await Employee.findOne({ where: { employee_key: req.body.employee_key } });
+    const employee = await Employee.findOne({ where: { employee_key: req.body.employee_key } });
 
-    
-    if (!user) {
-      return res.status(404).send({ message: "User Not found." });
+    if (!employee) {
+      return res.status(404).send({ message: "Employee Not found." });
     }
 
-    const passwordIsValid = bcrypt.compare(req.body.password, user.password);
+   
+   const passwordIsValid = bcrypt.compare(req.body.password, employee.password);
     
     if (!passwordIsValid) {
       return res.status(401).send({ accessToken: null, message: "Invalid Password!" });
     }
     
-    const token = jwt.sign({ id: user.id }, process.env.API_SECRET, {
+    const token = jwt.sign({ id: employee.id }, process.env.API_SECRET, {
       expiresIn: 86400,
     });
 
@@ -30,9 +31,9 @@ exports.signin = async (req, res) => {
 
     res.status(200).send({
       employee: {
-        id: user.id,
-        first_name: user.first_name,
-        fullName: user.fullName,
+        id: employee.employee_key,
+        first_name: employee.first_name,
+        job_title: employee.job_title,
       },
       message: "Login successful",
       accessToken: token,

@@ -2,6 +2,7 @@ module.exports = app => {
     const auth = require("../controllers/auth.controller");
     const employees = require("../controllers/employees.controller");
     var verifyToken = require('../middlewares/authJWT');
+
   
     var router = require("express").Router();
   

@@ -2,7 +2,7 @@ module.exports = app => {
 const router = require('express').Router({ mergeParams: true })
 const { param } = require('express-validator')
 const tokenHandler = require('../middlewares/tokenHandler')
-const sectionController = require('../controllers/section')
+const sectionController = require('../controllers/section.controller')
 const validation = require('../middlewares/validation')
 
 router.post(

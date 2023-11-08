@@ -3,7 +3,9 @@ const router = require('express').Router()
 const { param } = require('express-validator')
 const validation = require('../middlewares/validation')
 const tokenHandler = require('../middlewares/tokenHandler')
-const boardController = require('../controllers/board')
+const boardController = require('../controllers/board.controller')
+var verifyToken = require('../middlewares/authJWT');
+
 
 router.post(
   '/',
@@ -69,7 +71,13 @@ router.delete(
   validation.validate,
   tokenHandler.verifyToken,
   boardController.delete
-)
+) 
 
-app.use('boards', router);
+router.get('/get', function(req, res){
+  res.send({
+    message: "It works!",
+  })
+})
+
+app.use('/boards', router);
 };
