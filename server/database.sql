@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS employees (
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
     last_name VARCHAR(50) NOT NULL,
+    role VARCHAR(25),
     gender CHAR(6),
     dOB DATE, --date of bith
     doh DATE, --date of hire
@@ -35,39 +36,6 @@ CREATE TABLE IF NOT EXISTS departments (
 );
 
 
--- Roles table 
-CREATE TABLE IF NOT EXISTS roles (
-    role_id SERIAL PRIMARY KEY,
-    role_name VARCHAR(25) UNIQUE NOT NULL,
-    description TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
-
--- Permissions table 
-CREATE TABLE IF NOT EXISTS permissions (
-    permission_id SERIAL PRIMARY KEY,
-    slug VARCHAR(60) UNIQUE NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
-);
-
-
--- Employees Roles bridge table 
-CREATE TABLE IF NOT EXISTS employees_roles (
-    employees_roles_id SERIAL PRIMARY KEY,
-    employee_id INT,
-    role_id INT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
-    CONSTRAINT fk_employees_roles_role FOREIGN KEY (role_id)
-        REFERENCES roles (role_id) ON UPDATE NO ACTION ON DELETE CASCADE,
-    CONSTRAINT fk_employees_roles_employee FOREIGN KEY (employee_id)
-        REFERENCES employees (employee_id) ON UPDATE NO ACTION ON DELETE CASCADE
-);
-
-
 -- Employee Deaprtment bridge table
 CREATE TABLE IF NOT EXISTS employees_departments (
     employees_departments SERIAL PRIMARY KEY,
@@ -82,7 +50,33 @@ CREATE TABLE IF NOT EXISTS employees_departments (
 );
 
 
+-- ON HOLD-- (may be We will use different strategy for roles)
+-- Employees Roles bridge table 
+CREATE TABLE IF NOT EXISTS employees_roles (
+    employees_roles_id SERIAL PRIMARY KEY,
+    employee_id INT,
+    role_id INT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT fk_employees_roles_role FOREIGN KEY (role_id)
+        REFERENCES roles (role_id) ON UPDATE NO ACTION ON DELETE CASCADE,
+    CONSTRAINT fk_employees_roles_employee FOREIGN KEY (employee_id)
+        REFERENCES employees (employee_id) ON UPDATE NO ACTION ON DELETE CASCADE
+);
 
+-- Roles table 
+CREATE TABLE IF NOT EXISTS roles (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(25) UNIQUE NOT NULL,
+    description TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+
+
+
+-- We decide to use another technogies for user roles and permissions
 -- Roles Permissions bridge table
 CREATE TABLE IF NOT EXISTS roles_permissions (
     roles_permissions_id SERIAL PRIMARY KEY,
@@ -94,4 +88,13 @@ CREATE TABLE IF NOT EXISTS roles_permissions (
         REFERENCES permissions (permission_id) ON UPDATE NO ACTION ON DELETE CASCADE,
     CONSTRAINT fk_roles_permissions_role FOREIGN KEY (role_id)
         REFERENCES roles (role_id) ON UPDATE NO ACTION ON DELETE CASCADE
+);
+
+
+-- Permissions table 
+CREATE TABLE IF NOT EXISTS permissions (
+    permission_id SERIAL PRIMARY KEY,
+    slug VARCHAR(60) UNIQUE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
 );

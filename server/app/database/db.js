@@ -1,6 +1,9 @@
 const dbConfig = require("../config/db.config");
 
+
 const Sequelize = require("sequelize");
+
+
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -16,7 +19,11 @@ db.sequelize = sequelize;
 
 db.employees = require("../models/employees.model")(sequelize, Sequelize)
 db.departments = require("../models/departments.model")(sequelize, Sequelize)
-db.roles = require("../models/roles.model")(sequelize, Sequelize)
+//db.employees_departments = require("../models/employees_departments.model")(sequelize, Sequelize)
+//db.roles = require("../models/roles.model")(sequelize, Sequelize)
+
+//db.departments.belongsToMany(db.employees, {through:db.employees_departments});
+//db.employees.belongsTo(db.departments,  {through:db.employees_departments});
 
 
 

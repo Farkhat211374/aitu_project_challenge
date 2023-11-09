@@ -1,5 +1,6 @@
 module.exports = app => {
     const employees = require("../controllers/employees.controller");
+    const tokenHandler = require('../middlewares/tokenHandler')
   
     var router = require("express").Router();
   
@@ -16,7 +17,7 @@ module.exports = app => {
     router.put("/:id", employees.update);
 
     // Delete a Employees with id
-    router.delete("/:id", employees.delete);
+    router.delete("/:id", tokenHandler.verifyToken ,employees.grantAccess('updateAny','profile'), employees.delete);
 
     // Create a new Employees
     router.delete("/", employees.deleteAll);

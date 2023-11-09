@@ -1,5 +1,6 @@
 const { DATEONLY } = require("sequelize");
 const db = require("../database/db");
+const { roles } = require('../roles/roles')
 var bcrypt = require("bcrypt");
 const Employee = db.employees;
 const Op = db.Sequelize.Op;
@@ -21,6 +22,7 @@ exports.create = (req, res) => {
     first_name: req.body.first_name,
     middle_name: req.body.middle_name,
     last_name: req.body.last_name,
+    role: req.body.role,
     gender: req.body.gender,
     dob: Date.parse(req.body.dob), 
     doh: Date.parse(req.body.doh), 
@@ -153,3 +155,22 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
+
+
+
+ 
+exports.grantAccess = function(action, resource) {
+ return async (req, res, next) => {
+  try {
+   const permission = roles.can(req.employee.role)[action](resource);
+   if (!permission.granted) {
+    return res.status(401).json({
+     error: "You don't have enough permission to perform this action"
+    });
+   }
+   next()
+  } catch (error) {
+   next(error)
+  }
+ }
+}

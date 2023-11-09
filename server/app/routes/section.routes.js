@@ -50,6 +50,6 @@ router.delete(
   tokenHandler.verifyToken,
   sectionController.delete
 )
-
+  
 app.use('/boards/:boardId/sections', router)
 };

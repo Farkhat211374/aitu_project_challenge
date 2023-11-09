@@ -21,6 +21,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(50),
             allowNull: true,
           },
+          role: {
+            type: Sequelize.ENUM,
+            values: ['Basic', 'Moderator', 'Admin'],
+            defaultValue: 'Basic',
+          },
           gender: {
             type: Sequelize.ENUM,
             values: ['Male', 'Female']

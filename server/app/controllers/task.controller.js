@@ -22,7 +22,8 @@ exports.update = async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(
       taskId,
-      { $set: req.body }
+      { $set: req.body },
+      {new: true}
     )
     res.status(200).json(task)
   } catch (err) {

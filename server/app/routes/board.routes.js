@@ -4,8 +4,6 @@ const { param } = require('express-validator')
 const validation = require('../middlewares/validation')
 const tokenHandler = require('../middlewares/tokenHandler')
 const boardController = require('../controllers/board.controller')
-var verifyToken = require('../middlewares/authJWT');
-
 
 router.post(
   '/',

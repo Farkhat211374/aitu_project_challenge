@@ -17,7 +17,8 @@ exports.update = async (req, res) => {
   try {
     const section = await Section.findByIdAndUpdate(
       sectionId,
-      { $set: req.body }
+      { $set: req.body },
+      {new: true}
     )
     section._doc.tasks = []
     res.status(200).json(section)

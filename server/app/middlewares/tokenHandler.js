@@ -12,7 +12,7 @@ const tokenDecode = (req) => {
     try {
       const tokenDecoded = jsonwebtoken.verify(
         bearer,
-        process.env.TOKEN_SECRET_KEY
+        process.env.API_SECRET
       )
       return tokenDecoded
     } catch {

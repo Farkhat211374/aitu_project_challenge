@@ -4,6 +4,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const port = 8080
+const expressMinio = require("express-middleware-minio");
+const minioMiddleware = expressMinio.middleware();
 
 
 mongoose.connect('mongodb+srv://Farkhat:Sagat@cluster0.1i382pz.mongodb.net/kanban').then(()=>{
@@ -46,6 +48,63 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/board.routes")(app);
 require("./app/routes/section.routes")(app);
 require("./app/routes/task.routes")(app);
+require("./app/routes/news.routes")(app);
+
+
+// Upload a file
+app.post(
+  "/files",
+  minioMiddleware({ op: expressMinio.Ops.post }),
+  (req, res) => {
+    if (req.minio.error) {
+      res.status(400).json({ error: req.minio.error });
+    } else {
+      res.send({ filename: req.minio.post.filename });
+    }
+  }
+);
+
+// List all files
+app.get(
+  "/files",
+  minioMiddleware({ op: expressMinio.Ops.list }),
+  (req, res) => {
+    if (req.minio.error) {
+      res.status(400).json({ error: req.minio.error });
+    } else {
+      res.send(req.minio.list);
+    }
+  }
+);
+
+// Download a file
+app.get(
+  `/files/:filename`,
+  minioMiddleware({ op: expressMinio.Ops.getStream }),
+  (req, res) => {
+    if (req.minio.error) {
+      res.status(400).json({ error: req.minio.error });
+      return;
+    }
+
+    res.attachment(req.minio.get.originalName);
+    req.minio.get.stream.pipe(res);
+  }
+);
+
+// Delete a file
+app.delete(
+  "/files/:filename",
+  minioMiddleware({ op: expressMinio.Ops.delete }),
+  (req, res) => {
+    if (req.minio.error) {
+      res.status(400).json({ error: req.minio.error });
+    } else {
+      res.send(req.minio.delete);
+    }
+  }
+);
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
