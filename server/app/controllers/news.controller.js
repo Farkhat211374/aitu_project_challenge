@@ -5,9 +5,9 @@ exports.create = async (req, res) => {
       const news = await News.create({
         title: req.body.title,
         desc: req.body.desc,
-        cover_photo: req.body.cover_photo,
+        author: req.body.author,
         content: req.body.content,
-        video: req.body.video
+        docs: req.body.docs
       })
       res.status(201).json(news)
     } catch (err) {

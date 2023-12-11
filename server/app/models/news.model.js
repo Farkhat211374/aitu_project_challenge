@@ -11,18 +11,17 @@ const NewsSchema = new mongoose.Schema(
         type: String,
         require: true,
       },
-      cover_photo: {
+      author: {
         type: String,
-        require: false,
+        require: true,
       },
       content:{
         type: String,
         required: true,
       },
-      video:{
-        type: String,
-        required: false,
-      }
+      docs: {
+        type: [String],
+      },
     },
     { timestamps: true }
   )

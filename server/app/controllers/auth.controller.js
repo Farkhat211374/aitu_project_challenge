@@ -31,7 +31,8 @@ exports.signin = async (req, res) => {
 
     res.status(200).send({
       employee: {
-        id: employee.employee_key,
+        id: employee.id,
+        employee_key: employee.employee_key,
         first_name: employee.first_name,
         job_title: employee.job_title,
       },

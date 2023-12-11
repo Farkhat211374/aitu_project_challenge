@@ -17,7 +17,6 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    console.log(req.employee)
     const boards = await Board.find({ owner: req.employee.employee_key }).sort('-position')
     res.status(200).json(boards)
   } catch (err) {

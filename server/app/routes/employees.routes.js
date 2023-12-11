@@ -5,7 +5,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Employees
-    router.post("/", employees.create);
+    router.post("/", tokenHandler.verifyToken,employees.create);
 
     // Retrieve all Employees
     router.get("/", employees.findAll);
